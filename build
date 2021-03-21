@@ -1,24 +1,18 @@
 #!/bin/bash
-# kill script after defined minutes
-#{
-#    sleep 80m
-#    kill $$
-#} &
 
 mkdir /tmp/ci/build_artifacts
-cd /tmp/rom # Depends on where source got synced
-rm -rf .repo & # lets remove unnecessary things, so that no storage issue can occur
+cd /tmp/rom
 
 # Normal build steps
 source build/envsetup.sh
-lunch lineage_tissot-user
-export BUILD_TYPE=OFFICIAL
+export BUILD_TYPE=UNOFFICIAL
 export CCACHE_DIR=/tmp/ccache
 export CCACHE_EXEC=$(which ccache)
 export USE_CCACHE=1
 ccache -M 50G
 #ccache -o compression=true
 ccache -z
+lunch dot_tissot-user
 
 make_metalava(){
 	mka api-stubs-docs
