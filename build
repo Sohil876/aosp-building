@@ -3,6 +3,9 @@
 mkdir /tmp/ci/build_artifacts
 cd /tmp/rom
 
+# Install some deps
+sudo apt-get install -y axel schedtool
+
 # Normal build steps
 source build/envsetup.sh
 export BUILD_TYPE=UNOFFICIAL
@@ -12,16 +15,16 @@ export USE_CCACHE=1
 ccache -M 50G
 #ccache -o compression=true
 ccache -z
-lunch dot_tissot-user
+lunch dot_tissot-userdebug
 
 make_metalava(){
-	mka api-stubs-docs
-	mka system-api-stubs-docs
-	mka test-api-stubs-docs
+	make api-stubs-docs -j16
+	make system-api-stubs-docs -j16
+	make test-api-stubs-docs -j16
 }
 
 make_rom(){
-	mka bacon -j16
+	make bacon -j16
 }
 
 make_metalava
