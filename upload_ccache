@@ -1,14 +1,15 @@
 #!/bin/bash
 
 cd /tmp
-
+# Show ccache stats
+ccache -s
 # Compress function with pigz for faster compression
 com () 
 { 
-    tar -C /tmp/ --use-compress-program="pigz -k -1 " -cf $1.tar.gz $1
+    tar --use-compress-program="pigz -k -1 " -cf $1.tar.gz $1
 }
 
 time com ccache # Compression level 1, its enough
 mkdir -p ~/.config/rclone
-echo "$rclone_config" > ~/.config/rclone/rclone.conf
-time rclone copy ccache.tar.gz gdrive:ccache/ci2 -P
+echo "$RCLONE_CONFIG" > ~/.config/rclone/rclone.conf
+time rclone copy ccache.tar.gz rc-servera1:ccache/ -P

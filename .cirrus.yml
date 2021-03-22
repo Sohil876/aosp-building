@@ -1,15 +1,16 @@
 env: # Environt variable to pass to all tasks
-    CIRRUS_CLONE_DEPTH: 1 # No need to clone with whole history
-    CIRRUS_WORKING_DIR: "/tmp/ci" # Where to clone repo
-    BOT_TOKEN: ENCRYPTED[8a491f640c3e261353ace025117f33ac84f9bb571024634ada04505ff32eef9c7365ea77b2d491b2f889529a2aa5ff4e]
+  CIRRUS_CLONE_DEPTH: 1 # No need to clone with whole history
+  CIRRUS_WORKING_DIR: "/tmp/ci" # Where to clone repo
+  RCLONE_CONFIG: ENCRYPTED[504b2a475e8fda19d9dfe98d0acd9e38a0d0e04c5c6e7d180a5840833a00babedfda8571dde245832199e664480699dc]
+  BOT_TOKEN: ENCRYPTED[8a491f640c3e261353ace025117f33ac84f9bb571024634ada04505ff32eef9c7365ea77b2d491b2f889529a2aa5ff4e]
 
 task:
-    name: Rom-Builder
-    timeout_in: 120m # Timeout in minutes, max 120 for free users
-    container:
-      image: apon77/aosp:latest
-      cpu: 16
-      memory: 24G
+  name: Rom-Builder
+  timeout_in: 120m # Timeout in minutes, max 120 for free users
+  container:
+    image: apon77/aosp:latest
+    cpu: 16
+    memory: 24G
 #    aosp_persistent_cache:
 #      folder: /tmp/ccache
 #      folder: /tmp/rom/out
@@ -21,19 +22,11 @@ task:
 #        - mkdir -p /tmp/rom/out
 #    download_ccache_script:
 #      - bash download_ccache
-    info_dump_script:
-      - bash info_dump
-    sync_script:
-      - bash sync
-    build_script:
-      - bash build
-    build_zip_artifacts: # max 1GB total for free users
-      path: "build_artifacts/*.zip"
-      type: application/zip
-#    build_md5_artifacts:
-#      path: "build_artifacts/*.md5"
-#      type: text/plain
-#    upload_files_script:
-#      - bash upload_files
-#    upload_ccache_script:
-#      - ./upload_ccache
+  info_dump_script: bash info_dump
+  sync_script: bash sync
+  build_script: bash build
+#    build_zip_artifacts: # max 1GB total for free users
+ #     path: "build_artifacts/*.zip"
+#      type: application/zip
+#    upload_files_script: bash upload_files
+  upload_ccache_script: bash upload_ccache
