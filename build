@@ -3,9 +3,6 @@
 mkdir /tmp/ci/build_artifacts
 cd /tmp/rom
 
-# Install some deps
-sudo apt-get install -y axel schedtool
-
 # Normal build steps
 source build/envsetup.sh
 export LC_ALL=C 
@@ -18,18 +15,12 @@ ccache -o compression=true
 ccache -z
 lunch lineage_tissot-user
 
-make_metalava(){
-	make api-stubs-docs -j16
-	make system-api-stubs-docs -j16
-	make test-api-stubs-docs -j16
-}
+# Start build
+make api-stubs-docs -j16
+make system-api-stubs-docs -j16
+make test-api-stubs-docs -j16
 
-make_rom(){
-	make bacon -j16
-}
-
-make_metalava
-make_rom
+make bacon -j16
 
 # Copy build artifacts to ci dir for uploading on ci
 cp out/target/product/tissot/*.zip /tmp/ci/build_artifacts/

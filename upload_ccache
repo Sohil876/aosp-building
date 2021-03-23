@@ -5,9 +5,9 @@ cd /tmp
 ccache -s
 
 mkdir -p ~/.config/rclone
-printf "%s" "$RCLONE_CONFIG" > ~/.config/rclone/rclone.conf
+printenv RCLONE_CONFIG_SERVERA1 > ~/.config/rclone/rclone.conf
 
 # Compress function with pigz for faster compression
 time tar --use-compress-program="pigz -k -1 " -cf ccache.tar.gz ccache # Compression level 1, its enough
 
-time rclone copy ccache.tar.gz rc-servera1:ccache/ -P
+time rclone copy ccache.tar.gz rc-servera1:ccache -P

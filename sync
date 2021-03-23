@@ -3,7 +3,6 @@
 MANIFEST="https://github.com/crdroidandroid/android"
 BRANCH="11.0"
 
-cd /tmp/rom # Depends on where source got syncedrm -rf .repo & # lets remove unnecessary things, so that no storage issue can occur
 # cd to working dir
 mkdir -p /tmp/rom
 cd /tmp/rom
@@ -16,17 +15,6 @@ repo init --no-repo-verify --depth=1 -u "$MANIFEST" -b "$BRANCH" -g default,-dev
 # Sync source with -q, no need unnecessary messages, you can remove -q if want! try with -j30 first, if fails, it will try again with -j8
 repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j8
 
-# Clone extra repos, device side repos and extra ones
-# Trees
-echo "Cloning device side stuff!"
-git clone https://github.com/crdroidandroid/android_device_xiaomi_tissot.git -b 11.0 device/xiaomi/tissot --single-branch --depth=1
-#git clone https://github.com/Devel-Zone/android_device_xiaomi_tissot.git -b 11.0 device/xiaomi/tissot --single-branch --depth=1
-#git clone https://github.com/crdroidandroid/android_device_xiaomi_msm8953-common-tissot.git -b 11.0 device/xiaomi/msm8953-common --single-branch --depth=1
-git clone https://github.com/Devel-Zone/android_device_xiaomi_msm8953-common-tissot.git -b 11.0 device/xiaomi/msm8953-common --single-branch --depth=1
-git clone https://github.com/crdroidandroid/android_kernel_xiaomi_tissot.git -b 11.0 kernel/xiaomi/msm8953 --single-branch --depth=1
-git clone https://gitlab.com/MASTERGUY/proprietary_vendor_xiaomi.git -b eleven vendor/xiaomi --single-branch --depth=1
-#Hals
-#rm -rf hardware/qcom-caf/msm8996/audio hardware/qcom-caf/msm8996/display hardware/qcom-caf/msm8996/media
-#git clone https://github.com/crdroidandroid/android_hardware_qcom_audio -b 11.0-caf-msm8996 hardware/qcom-caf/msm8996/audio --single-branch --depth=1
-#git clone https://github.com/crdroidandroid/android_hardware_qcom_display -b 11.0-caf-msm8996 hardware/qcom-caf/msm8996/display --single-branch --depth=1
-#git clone https://github.com/crdroidandroid/android_hardware_qcom_media -b 11.0-caf-msm8996 hardware/qcom-caf/msm8996/media --single-branch --depth=1
+# Install some deps
+sudo apt-get update
+sudo apt-get install -y axel schedtool rclone
