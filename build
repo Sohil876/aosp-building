@@ -1,9 +1,8 @@
 #!/bin/bash
-
+# Build rom
 mkdir /tmp/ci/build_artifacts
 cd /tmp/rom
-
-# Normal build steps
+# Setup confs/build env
 source build/envsetup.sh
 export LC_ALL=C 
 export BUILD_TYPE=OFFICIAL
@@ -14,14 +13,12 @@ ccache -M 20G
 ccache -o compression=true
 ccache -z
 lunch lineage_tissot-user
-
-# Start build
+# Precompile metalava
 make api-stubs-docs -j16
 make system-api-stubs-docs -j16
-make test-api-stubs-docs -j16
-
+#make test-api-stubs-docs -j16
+# Start build
 make bacon -j16
-
 # Copy build artifacts to ci dir for uploading on ci
-cp out/target/product/tissot/*.zip /tmp/ci/build_artifacts/
+#cp out/target/product/tissot/*.zip /tmp/ci/build_artifacts/
 #cp out/target/product/tissot/*.md5 /tmp/ci/build_artifacts/
