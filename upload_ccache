@@ -1,13 +1,10 @@
 #!/bin/bash
-
+# Upload ccache
 cd /tmp
 # Show ccache stats
 ccache -s
-
 mkdir -p ~/.config/rclone
 printenv RCLONE_CONFIG_SERVERA1 > ~/.config/rclone/rclone.conf
-
 # Compress function with pigz for faster compression
 time tar --use-compress-program="pigz -k -1 " -cf ccache.tar.gz ccache # Compression level 1, its enough
-
-time rclone copy ccache.tar.gz rc-servera1:ccache -P
+time rclone copy ccache.tar.gz rc-servera1:ccache/tissot/crdroid -P

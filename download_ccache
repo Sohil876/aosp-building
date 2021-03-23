@@ -1,16 +1,9 @@
 #!/bin/bash
-# Lets see machine specifications and environments
-df -h
-free -h
-nproc
-cat /etc/os*
-env
-
-url="https://server-a1.sohil876.workers.dev/0:/Ashu/rclone/ccache_tissot/ccache.tar.gz"
-
+# Download ccache
+ccache_url="https://server-a1.sohil876.workers.dev/0:/ccache/tissot/crdroid/ccache.tar.gz"
 cd /tmp # Where to download cccahe
 #time aria2c $url -x16 -s50 || time aria2c $url -x16 -s50
-time curl -O -L $url || time aria2c $url
+time curl -O -L $ccache_url || time aria2c $ccache_url
 ls -lh ccache.tar.gz
 time tar xf ccache.tar.gz
 ls -lh /tmp/ccache/

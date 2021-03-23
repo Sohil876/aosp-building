@@ -11,23 +11,13 @@ task:
     image: apon77/aosp:latest
     cpu: 16
     memory: 24G
-#    aosp_persistent_cache:
-#      folder: /tmp/ccache
-#      folder: /tmp/rom/out
-#      reupload_on_changes: true # false since there is a fingerprint script
-#      fingerprint_script:
-#        - echo $CIRRUS_OS
-#      populate_script:
-#        - mkdir -p /tmp/ccache
-#        - mkdir -p /tmp/rom/out
-#    download_ccache_script:
-#      - bash download_ccache
+  download_ccache_script: bash download_ccache
   info_dump_script: bash info_dump
   sync_script: bash sync
   clone_devicestuff_script: bash devicestuff
   build_script: bash build
-#    build_zip_artifacts: # max 1GB total for free users
- #     path: "build_artifacts/*.zip"
-#      type: application/zip
-#    upload_files_script: bash upload_files
+  build_zip_artifacts: # max 1GB total for free users
+    path: "build_artifacts/*.zip"
+    type: application/zip
+#  upload_files_script: bash upload_files
   upload_ccache_script: bash upload_ccache
