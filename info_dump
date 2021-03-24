@@ -1,4 +1,10 @@
 #!/bin/bash
+# Setup for builder
+mkdir -p ${ROM_FOLDER}
+mkdir -p ${CIRRUS_WORKING_DIR}/build_artifacts
+mkdir -p ~/.config/rclone
+printenv RCLONE_CONFIG_SERVERA1 > ~/.config/rclone/rclone.conf
+
 # Lets see machine specifications and environments
 echo "CPUs: "
 nproc --all
@@ -13,9 +19,3 @@ echo "Enviornment: "
 cat /etc/os*
 echo " "
 env
-#echo " "
-# Check persistent folder for contents
-#echo "Cache: "
-#ls -lh /tmp/ccache
-#echo "Out: "
-#ls -lh /tmp/rom/out

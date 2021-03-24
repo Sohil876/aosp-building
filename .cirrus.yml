@@ -2,7 +2,8 @@ env: # Environt variable to pass to all tasks
   CIRRUS_CLONE_DEPTH: 1 # No need to clone with whole history
   CIRRUS_WORKING_DIR: "/tmp/ci" # Where to clone repo
   RCLONE_CONFIG_SERVERA1: "ENCRYPTED[edd23b810a0f597b9ae4ba90af9f65a4695dc39b6d09fab545ee46d1b11101ced00da4ffd368940db0975354f51d01d9]"
-#  BOT_TOKEN: "ENCRYPTED[8a491f640c3e261353ace025117f33ac84f9bb571024634ada04505ff32eef9c7365ea77b2d491b2f889529a2aa5ff4e]"
+  BOT_TOKEN: "ENCRYPTED[8a491f640c3e261353ace025117f33ac84f9bb571024634ada04505ff32eef9c7365ea77b2d491b2f889529a2aa5ff4e]"
+  ROM_FOLDER: "/tmp/rom"
 
 task:
   name: Rom-Builder
@@ -11,8 +12,8 @@ task:
     image: apon77/aosp:latest
     cpu: 16
     memory: 24G
+  info_dump_script: bash info_dump # Has some important setup stuff for Rom-Builder!
   download_ccache_script: bash download_ccache
-  info_dump_script: bash info_dump
   sync_script: bash sync
   clone_devicestuff_script: bash devicestuff
   build_script: bash build

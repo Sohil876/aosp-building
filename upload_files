@@ -1,8 +1,5 @@
 #!/bin/bash
 # Upload files
-mkdir -p ~/.config/rclone
-printenv RCLONE_CONFIG_SERVERA1 > ~/.config/rclone/rclone.conf
-cd /tmp/rom
+cd ${ROM_FOLDER}
 time rclone copy out/target/product/tissot/crDroidAndroid-*.zip rc-servera1:Public_Folder/Ashu/Others
-echo " "
-echo "https://server-a1.sohil876.workers.dev/0:/Ashu/Others/$FILENAME"
+echo "Upload sucessfull!"
