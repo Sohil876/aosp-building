@@ -1,9 +1,7 @@
 #!/bin/bash
 # Download ccache
 cd /tmp # Where to download cccahe
-ccache_url="https://server-a1.sohil876.workers.dev/0:/ccache/tissot/crdroid/ccache.tar.gz"
-#time aria2c $url -x16 -s50 || time aria2c $url -x16 -s50
-time curl -O -L $ccache_url || time aria2c $ccache_url
+rclone copy rc-servera1:Public_Folder/ccache/tissot/crdroid/ccache.tar.gz $PWD -P
 ls -lh ccache.tar.gz
 time tar xf ccache.tar.gz
 ls -lh /tmp/ccache/
