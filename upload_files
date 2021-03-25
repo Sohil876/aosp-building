@@ -1,5 +1,6 @@
 #!/bin/bash
 # Upload files
 cd ${ROM_FOLDER}
-time rclone copy out/target/product/tissot/crDroidAndroid-*.zip rc-servera1:Public_Folder/Ashu/Others
+#time rclone copy out/target/product/tissot/crDroidAndroid-*.zip rc-servera1:Public_Folder/Ashu/Others
+time rclone copy out/target/product/tissot/crDroidAndroid-*.zip my-mega:Test_Builds/
 echo "Upload sucessfull!"

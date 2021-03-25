@@ -1,4 +1,14 @@
 #!/bin/bash
+# Additional deps
+echo "Installing additional deps..."
+sudo apt update
+sudo apt install wget
+sudo apt remove rclone -y
+cd /tmp
+wget https://downloads.rclone.org/v1.54.1/rclone-v1.54.1-linux-amd64.deb
+sudo dpkg -i rclone-v1.54.1-linux-amd64.deb
+echo " "
+
 # Setup for builder
 mkdir -p ${ROM_FOLDER}
 mkdir -p ${CIRRUS_WORKING_DIR}/build_artifacts
