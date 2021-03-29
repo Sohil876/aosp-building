@@ -17,8 +17,8 @@ task:
   sync_script: bash sync
   clone_devicestuff_script: bash devicestuff
   build_script: bash build
-#  build_zip_artifacts: # max 1GB total for free users, needs artifacts in working directory atm
-#    path: "build_artifacts/*.zip"
-#    type: application/zip
+  build_zip_artifacts: # max 1GB total for free users, needs artifacts in working directory atm
+    path: "build_artifacts/*.zip"
+    type: application/zip
   upload_files_script: bash upload_files
   upload_ccache_script: bash upload_ccache
