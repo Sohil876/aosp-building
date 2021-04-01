@@ -1,7 +1,7 @@
 env: # Environt variable to pass to all tasks
   CIRRUS_CLONE_DEPTH: 1 # No need to clone with whole history
   CIRRUS_WORKING_DIR: "/tmp/ci" # Where to clone repo
-  ROM_FOLDER: "/tmp/rom"
+  ROM_FOLDER: "/tmp/rom" # Where rom is synced
   RCLONE_CONFIG_FILE: "ENCRYPTED[ea67c1fb81f3e4c2df351384bc482114346847a8ea3147c3e08894af370da70d063a2c9db663469718181cab3707564e]"
   BOT_TOKEN: "ENCRYPTED[8a491f640c3e261353ace025117f33ac84f9bb571024634ada04505ff32eef9c7365ea77b2d491b2f889529a2aa5ff4e]"
 
@@ -20,5 +20,7 @@ task:
   build_zip_artifacts: # max 1GB total for free users, needs artifacts in working directory atm
     path: "build_artifacts/*.zip"
     type: application/zip
+    path: "build_artifacts/tissot.json"
+    type: application/json
   upload_files_script: bash upload_files
   upload_ccache_script: bash upload_ccache
