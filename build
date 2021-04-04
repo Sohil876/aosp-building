@@ -24,9 +24,9 @@ curl -s -X POST -d chat_id="${CHAT_ID}" -d parse_mode=html -d text="${MESSAGE}" 
 if [ "${PRECOMPILE_METALAVA}" = true ]; then
   echo "PreCompiling Metalava!"
   make api-stubs-docs -j16
-  make hiddenapi-lists-docs -j16
+#  make hiddenapi-lists-docs -j16
   make system-api-stubs-docs -j16
-  make test-api-stubs-docs -j16
+#  make test-api-stubs-docs -j16
 fi
 
 # Start the build
@@ -66,4 +66,5 @@ if [ "${GEN_JSON_FOR_OTA}" = true ]; then
   cd ${ROM_FOLDER}
   bash createjson
   cp ${ROM_FOLDER}/tissot.json ${CIRRUS_WORKING_DIR}/build_artifacts/
+  cp ${OUT}/changelog_tissot.txt ${CIRRUS_WORKING_DIR}/build_artifacts/
 fi
