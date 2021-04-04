@@ -1,7 +1,6 @@
 #!/bin/bash
 # Additional deps
 echo "Installing additional deps..."
-sudo apt update
 sudo apt install wget
 sudo apt remove rclone -y
 cd /tmp

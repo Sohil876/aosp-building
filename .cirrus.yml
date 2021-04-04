@@ -17,13 +17,14 @@ task:
   sync_script: bash sync
   clone_devicestuff_script: bash devicestuff
   build_script: bash build
-  build_zip_artifacts: # max 1GB total for free users, needs artifacts in working directory atm
-    path: "build_artifacts/*.zip"
-    type: application/zip
-  build_ota_artifacts:
-    path: "build_artifacts/tissot.json"
-    type: application/json
-    path: "build_artifacts/changelog_tissot.txt"
-    type: text/plain
-  upload_files_script: bash upload_files
+  build_rom_artifacts: # max 1GB total for free users, needs artifacts in working directory atm
+    path: "build_artifacts/*"
+#    type: application/zip
+#  build_ota_json_artifacts:
+#    path: "build_artifacts/tissot.json"
+#    type: application/json
+#  build_ota_changelog_artifacts:
+#    path: "build_artifacts/changelog_tissot.txt"
+ #   type: text/plain
+#  upload_files_script: bash upload_files
   upload_ccache_script: bash upload_ccache

@@ -23,10 +23,10 @@ curl -s -X POST -d chat_id="${CHAT_ID}" -d parse_mode=html -d text="${MESSAGE}" 
 # Precompile Metalava if enabled in config
 if [ "${PRECOMPILE_METALAVA}" = true ]; then
   echo "PreCompiling Metalava!"
-  make api-stubs-docs -j16
-#  make hiddenapi-lists-docs -j16
-  make system-api-stubs-docs -j16
-#  make test-api-stubs-docs -j16
+  make api-stubs-docs ${BUILD_JOBS}
+#  make hiddenapi-lists-docs ${BUILD_JOBS}
+  make system-api-stubs-docs ${BUILD_JOBS}
+#  make test-api-stubs-docs ${BUILD_JOBS}
 fi
 
 # Start the build
@@ -52,7 +52,6 @@ read -r -d '' MESSAGE <<-_EOL_
 <strong>BUILD SUCCESSFULL!</strong>
 <strong>Time :</strong> $((DIFF / 60)) minutes and $((DIFF % 60)) seconds
 <strong>Date :</strong> $(date +"%Y-%m-%d")
-<strong>Download :</strong> <a href="${DOWN_LINK}">${DOWN_LINK_HOST}</a>
 _EOL_
 curl -s -X POST -d chat_id="${CHAT_ID}" -d parse_mode=html -d text="${MESSAGE}" -d disable_web_page_preview="true" https://api.telegram.org/bot"${BOT_TOKEN}"/sendMessage
 curl -F chat_id="${CHAT_ID}" -F document=@"${ROM_FOLDER}"/"${ROM}"-build.log -F caption="" https://api.telegram.org/bot"${BOT_TOKEN}"/sendDocument
@@ -60,7 +59,7 @@ curl -F chat_id="${CHAT_ID}" -F document=@"${ROM_FOLDER}"/"${ROM}"-build.log -F 
 # Copy build artifacts to ci dir for uploading on ci
 cp ${OUT}/*.zip ${CIRRUS_WORKING_DIR}/build_artifacts/
 
-if [ "${GEN_JSON_FOR_OTA}" = true ]; then
+if [ "${GEN_OTA_ARTIFACTS}" = true ]; then
   echo "Generating json file for ota!"
   cp ${CIRRUS_WORKING_DIR}/createjson ${ROM_FOLDER}/
   cd ${ROM_FOLDER}
