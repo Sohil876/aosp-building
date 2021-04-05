@@ -28,7 +28,7 @@ if [ "${PRECOMPILE_METALAVA}" = true ]; then
   make api-stubs-docs ${BUILD_JOBS}
   make hiddenapi-lists-docs ${BUILD_JOBS}
   make system-api-stubs-docs ${BUILD_JOBS}
-  make test-api-stubs-docs ${BUILD_JOBS}
+#  make test-api-stubs-docs ${BUILD_JOBS}
 fi
 
 # Start the build

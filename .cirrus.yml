@@ -10,8 +10,8 @@ task:
   timeout_in: 120m # Timeout in minutes, max 120 for free users
   container:
     image: apon77/aosp:latest
-    cpu: 8
-    memory: 48G
+    cpu: 8 # Max 8 allowed for free users
+    memory: 32G # Max 4G per cpu allowed
   info_dump_script: bash info_dump # Has some important setup stuff for Rom-Builder!
   download_ccache_script: bash download_ccache
   sync_script: bash sync
