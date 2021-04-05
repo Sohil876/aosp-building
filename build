@@ -9,6 +9,7 @@ lunch "${ROM}"_"${DEVICE}"-"${TARGET}"
 BUILD_START_DATE=$(date +"%Y%m%d")
 BUILD_START=$(date +"%s")
 # Report to tg group/channel
+if [ "${SEND_MESSAGES_TO_TG}" = true ]; then
 read -r -d '' MESSAGE <<-_EOL_
 <strong>Build Started!</strong>
 <strong>@</strong> $(date "+%I:%M%p") ($(date +"%Z%:z"))
@@ -19,14 +20,15 @@ read -r -d '' MESSAGE <<-_EOL_
 <strong>Target :</strong> ${TARGET}
 _EOL_
 curl -s -X POST -d chat_id="${CHAT_ID}" -d parse_mode=html -d text="${MESSAGE}" -d disable_web_page_preview="true" https://api.telegram.org/bot"${BOT_TOKEN}"/sendMessage
+fi
 
 # Precompile Metalava if enabled in config
 if [ "${PRECOMPILE_METALAVA}" = true ]; then
   echo "PreCompiling Metalava!"
   make api-stubs-docs ${BUILD_JOBS}
-#  make hiddenapi-lists-docs ${BUILD_JOBS}
+  make hiddenapi-lists-docs ${BUILD_JOBS}
   make system-api-stubs-docs ${BUILD_JOBS}
-#  make test-api-stubs-docs ${BUILD_JOBS}
+  make test-api-stubs-docs ${BUILD_JOBS}
 fi
 
 # Start the build
@@ -36,11 +38,13 @@ ${MAKE_COMMAND} 2>&1 | tee "${ROM}"-build.log
 if [ ! -f "${OUT}"/*"${TYPE}"*.zip ]; then
   echo "Build failed!"
 # Send msg to telegram
-read -r -d '' MESSAGE <<-_EOL_
+  if [ "${SEND_MESSAGES_TO_TG}" = true ]; then
+  read -r -d '' MESSAGE <<-_EOL_
 <strong>BUILD FAILED!</strong>
 _EOL_
-  curl -s -X POST -d chat_id="${CHAT_ID}" -d parse_mode=html -d text="${MESSAGE}" https://api.telegram.org/bot"${BOT_TOKEN}"/sendMessage
-  curl -F chat_id="${CHAT_ID}" -F document=@"${ROM_FOLDER}"/"${ROM}"-build.log -F caption="" https://api.telegram.org/bot"${BOT_TOKEN}"/sendDocument
+    curl -s -X POST -d chat_id="${CHAT_ID}" -d parse_mode=html -d text="${MESSAGE}" https://api.telegram.org/bot"${BOT_TOKEN}"/sendMessage
+    curl -F chat_id="${CHAT_ID}" -F document=@"${ROM_FOLDER}"/"${ROM}"-build.log -F caption="" https://api.telegram.org/bot"${BOT_TOKEN}"/sendDocument
+  fi
   exit 1
 fi
 
@@ -48,6 +52,7 @@ fi
 BUILD_END=$(date +"%s")
 DIFF=$((BUILD_END - BUILD_START))
 # Send msg to telegram
+if [ "${SEND_MESSAGES_TO_TG}" = true ]; then
 read -r -d '' MESSAGE <<-_EOL_
 <strong>BUILD SUCCESSFULL!</strong>
 <strong>Time :</strong> $((DIFF / 60)) minutes and $((DIFF % 60)) seconds
@@ -55,6 +60,7 @@ read -r -d '' MESSAGE <<-_EOL_
 _EOL_
 curl -s -X POST -d chat_id="${CHAT_ID}" -d parse_mode=html -d text="${MESSAGE}" -d disable_web_page_preview="true" https://api.telegram.org/bot"${BOT_TOKEN}"/sendMessage
 curl -F chat_id="${CHAT_ID}" -F document=@"${ROM_FOLDER}"/"${ROM}"-build.log -F caption="" https://api.telegram.org/bot"${BOT_TOKEN}"/sendDocument
+fi
 
 # Copy build artifacts to ci dir for uploading on ci
 cp ${OUT}/*.zip ${CIRRUS_WORKING_DIR}/build_artifacts/

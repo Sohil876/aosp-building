@@ -10,12 +10,14 @@ repo init --no-repo-verify --depth=1 -u ${ROM_MANIFEST} -b ${ROM_BRANCH} -g defa
 
 SYNC_START=$(date +"%s")
 # Report to tg group/channel
+if [ "${SEND_MESSAGES_TO_TG}" = true ]; then
 read -r -d '' MESSAGE <<-_EOL_
 <strong>Sync Started!</strong>
 <strong>@</strong> $(date "+%I:%M%p") ($(date +"%Z%:z"))
 <strong>Syncing:</strong> ${ROM_NAME}
 _EOL_
 curl -s -X POST -d chat_id="${CHAT_ID}" -d parse_mode=html -d text="${MESSAGE}" -d disable_web_page_preview="true" https://api.telegram.org/bot"${BOT_TOKEN}"/sendMessage
+fi
 
 # Sync source with -q, no need unnecessary messages, you can remove -q if want! try with -j30 first, if fails, it will try again with -j8
 repo sync ${SYNC_ARGUMENTS}
@@ -24,12 +26,14 @@ if [ "${SYNC_ARGUMENTS}" = false ]; then
 else
   repo sync ${SYNC_ARGUMENTS}
 fi
+
 SYNC_END=$(date +"%s")
 DIFF=$((SYNC_END - SYNC_START))
-
 # Sync succeded! report to tg group/channel
+if [ "${SEND_MESSAGES_TO_TG}" = true ]; then
 read -r -d '' MESSAGE <<-_EOL_
 <strong>Sync Finished!</strong>
 <strong>Time :</strong> $((DIFF / 60)) minutes and $((DIFF % 60)) seconds
 _EOL_
 curl -s -X POST -d chat_id="${CHAT_ID}" -d parse_mode=html -d text="${MESSAGE}" https://api.telegram.org/bot"${BOT_TOKEN}"/sendMessage
+fi
