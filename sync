@@ -8,7 +8,7 @@ git config --global user.name ${GIT_USERNAME}
 git config --global user.email ${GIT_EMAIL}
 repo init --no-repo-verify -u ${ROM_MANIFEST} -b ${ROM_BRANCH} --groups=all,-notdefault,-device,-generic,-google,-darwin,-x86,-mips,-exynos5,mako --depth=1
 
-if [ "${SEND_MESSAGES_TO_TG}" = true ]; then
+if [ "${SEND_SYNC_MESSAGES_TO_TG}" = true ]; then
   SYNC_START=$(date +"%s")
   # Report to tg group/channel
   read -r -d '' MESSAGE <<-_EOL_
@@ -26,7 +26,7 @@ else
   repo sync ${SYNC_ARGUMENTS}
 fi
 
-if [ "${SEND_MESSAGES_TO_TG}" = true ]; then
+if [ "${SEND_SYNC_MESSAGES_TO_TG}" = true ]; then
   SYNC_END=$(date +"%s")
   DIFF=$((SYNC_END - SYNC_START))
   # Sync succeded! report to tg group/channel

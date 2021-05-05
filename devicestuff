@@ -6,4 +6,4 @@ echo "Cloning device side stuff!"
 git clone https://github.com/Sohil876/android_device_xiaomi_tissot.git -b 11.0 device/xiaomi/tissot --single-branch --depth=1
 git clone https://github.com/Sohil876/android_device_xiaomi_msm8953-common-tissot.git -b 11.0 device/xiaomi/msm8953-common --single-branch --depth=1
 git clone https://github.com/crdroidandroid/android_kernel_xiaomi_tissot.git -b 11.0 kernel/xiaomi/msm8953 --single-branch --depth=1
-git clone https://gitlab.com/MASTERGUY/proprietary_vendor_xiaomi.git -b eleven vendor/xiaomi --single-branch --depth=1
+git clone https://gitlab.com/Sohil876/proprietary_vendor_xiaomi.git -b eleven vendor/xiaomi --single-branch --depth=1

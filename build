@@ -6,7 +6,7 @@ cd ${ROM_FOLDER}
 source build/envsetup.sh
 lunch "${ROM}"_"${DEVICE}"-"${TARGET}"
 
-if [ "${SEND_MESSAGES_TO_TG}" = true ]; then
+if [ "${SEND_BUILD_MESSAGES_TO_TG}" = true ]; then
   BUILD_START_DATE=$(date +"%Y%m%d")
   BUILD_START=$(date +"%s")
   # Report to tg group/channel
@@ -32,7 +32,7 @@ if [ "${PRECOMPILE_METALAVA}" = true ]; then
 fi
 
 # Start the build
-if [ "${SEND_MESSAGES_TO_TG}" = true ]; then
+if [ "${SEND_BUILD_MESSAGES_TO_TG}" = true ]; then
   ${MAKE_COMMAND} 2>&1 | tee "${ROM}"-build.log
 else
   ${MAKE_COMMAND}
@@ -42,7 +42,7 @@ fi
 if [ ! -f "${OUT}"/*"${TYPE}"*.zip ]; then
   echo "Build failed!"
 # Send msg to telegram
-  if [ "${SEND_MESSAGES_TO_TG}" = true ]; then
+  if [ "${SEND_BUILD_MESSAGES_TO_TG}" = true ]; then
   read -r -d '' MESSAGE <<-_EOL_
 <strong>BUILD FAILED!</strong>
 _EOL_
@@ -53,7 +53,7 @@ _EOL_
 fi
 
 # Build Sucessfull!
-if [ "${SEND_MESSAGES_TO_TG}" = true ]; then
+if [ "${SEND_BUILD_MESSAGES_TO_TG}" = true ]; then
   BUILD_END=$(date +"%s")
   DIFF=$((BUILD_END - BUILD_START))
   # Send msg to telegram
