@@ -2,6 +2,21 @@
 source ${CIRRUS_WORKING_DIR}/rb.conf
 cd ${ROM_FOLDER}
 
+if [ "${ENABLE_BUILD_CCACHE_ONLY}" = true ]; then
+  echo "ENABLED CCACHE ONLY BUILD MODE!, ROM BUILD SCRIPT WONT EXECUTE!, DISABLE IT IN CONFIG TO BUILD ROMs!"
+  # Build ccache
+  echo "Starting ccache build..."
+  source build/envsetup.sh
+  lunch "${ROM}"_"${DEVICE}"-"${TARGET}"
+  make api-stubs-docs ${BUILD_JOBS}
+  make hiddenapi-lists-docs ${BUILD_JOBS}
+  make system-api-stubs-docs ${BUILD_JOBS}
+  make test-api-stubs-docs ${BUILD_JOBS}
+  exit 0
+else
+  :
+fi
+
 # Build rom
 source build/envsetup.sh
 lunch "${ROM}"_"${DEVICE}"-"${TARGET}"
@@ -25,10 +40,10 @@ fi
 # Precompile Metalava if enabled in config
 if [ "${PRECOMPILE_METALAVA}" = true ]; then
   echo "PreCompiling Metalava!"
-#  make api-stubs-docs ${BUILD_JOBS}
-#  make hiddenapi-lists-docs ${BUILD_JOBS}
+  make api-stubs-docs ${BUILD_JOBS}
+  make hiddenapi-lists-docs ${BUILD_JOBS}
   make system-api-stubs-docs ${BUILD_JOBS}
-  make test-api-stubs-docs ${BUILD_JOBS}
+#  make test-api-stubs-docs ${BUILD_JOBS}
 fi
 
 # Start the build
@@ -53,6 +68,7 @@ _EOL_
 fi
 
 # Build Sucessfull!
+echo "Build sucessfull!"
 if [ "${SEND_BUILD_MESSAGES_TO_TG}" = true ]; then
   BUILD_END=$(date +"%s")
   DIFF=$((BUILD_END - BUILD_START))

@@ -1,4 +1,11 @@
 #!/bin/bash
+source ${CIRRUS_WORKING_DIR}/rb.conf
+if [ "${ENABLE_BUILD_CCACHE_ONLY}" = true ]; then
+  echo "ENABLED CCACHE ONLY BUILD MODE!, ROM BUILD SCRIPT WONT EXECUTE!, DISABLE IT IN CONFIG TO BUILD ROMs!"
+  exit 0
+else
+  :
+fi
 # Upload files
 cd ${ROM_FOLDER}
 #time rclone copy out/target/product/tissot/crDroidAndroid-*.zip rc-servera1:Public_Folder/Ashu/Others
