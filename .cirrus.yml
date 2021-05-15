@@ -1,17 +1,13 @@
-env: # Environt variable to pass to all tasks
-  CIRRUS_CLONE_DEPTH: 1 # No need to clone with whole history
-  CIRRUS_WORKING_DIR: "/tmp/ci" # Where to clone repo
-  ROM_FOLDER: "/tmp/rom" # Where rom is synced
-  RCLONE_CONFIG_FILE: "ENCRYPTED[18b9c678d92190c26247d66300512f76407b06d2f78ef5c893970155df8e607c87469444c3349bed89aea30dee459a35]"
-  BOT_TOKEN: "ENCRYPTED[0db16e928a3ddd29828143cd6673362baa9c4299fce69e7065626deeabca445afb14fb62ab517c73da5546e15e31a504]"
-
 task:
   name: Rom-Builder
-  timeout_in: 120m # Timeout in minutes, max 120 for free users
-  container:
-    image: apon77/aosp:latest
-    cpu: 8 # Max 8 allowed for free users
-    memory: 32G # Max 4G per cpu allowed
+#  timeout_in: 4h
+  persistent_worker: {}
+  env: # Environt variable to pass to all tasks
+    CIRRUS_CLONE_DEPTH: 1 # No need to clone with whole history
+    CIRRUS_WORKING_DIR: "/tmp/ci" # Where to clone repo
+    ROM_FOLDER: "/tmp/rom" # Where rom is synced
+    RCLONE_CONFIG_FILE: "ENCRYPTED[18b9c678d92190c26247d66300512f76407b06d2f78ef5c893970155df8e607c87469444c3349bed89aea30dee459a35]"
+    BOT_TOKEN: "ENCRYPTED[0db16e928a3ddd29828143cd6673362baa9c4299fce69e7065626deeabca445afb14fb62ab517c73da5546e15e31a504]"
   info_dump_script: bash info_dump # Has some important setup stuff for Rom-Builder!
   download_ccache_script: bash download_ccache
   sync_script: bash sync
